@@ -23,7 +23,7 @@ app.post('/transcation',function(req, res){
 // test last
 
 
-//adding feature on my code
+// resolve conflict on github
 
 // app.get('/mine',function(req,res){
 
