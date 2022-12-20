@@ -24,6 +24,7 @@ app.post('/transcation',function(req, res){
 
 
 // resolve conflict on github
+// creating conflicts test
 
 // app.get('/mine',function(req,res){
 
