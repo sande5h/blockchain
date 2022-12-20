@@ -22,10 +22,8 @@ app.post('/transcation',function(req, res){
 //test fot git push
 // test last
 
-// features fffff
-// adding feature on top of the features
 
-// does this change the line or not we need to cheeck
+// resolve conflict on github
 
 // app.get('/mine',function(req,res){
 
