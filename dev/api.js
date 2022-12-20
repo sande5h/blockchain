@@ -19,6 +19,8 @@ app.post('/transcation',function(req, res){
 });
 
 //test for git
+//test fot git push
+
 // app.get('/mine',function(req,res){
 
  
