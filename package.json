@@ -1,12 +1,18 @@
 {
   "scripts": {
-    "start": "nodemon --watch dev -e js dev/api.js"
+    "node_1": "nodemon --watch dev -e js dev/networkNode.js 3001 http://localhost:3001/blockchain",
+    "node_2": "nodemon --watch dev -e js dev/networkNode.js 3002 http://localhost:3002/blockchain",
+    "node_3": "nodemon --watch dev -e js dev/networkNode.js 3003 http://localhost:3003/blockchain",
+    "node_4": "nodemon --watch dev -e js dev/networkNode.js 3004 http://localhost:3004/blockchain",
+    "node_5": "nodemon --watch dev -e js dev/networkNode.js 3005 http://localhost:3005/blockchain"
+    //adding different nodes port and node address
   },
   "dependencies": {
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "npm": "^9.2.0",
-    "sha256": "^0.2.0"
+    "sha256": "^0.2.0",
+    "uuid": "^9.0.0"
   }
 }
