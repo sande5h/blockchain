@@ -7,6 +7,8 @@ const port = process.argv[2]; //different port number
 
 const uuid = require('uuid');
 const nodeAddress = uuid.v4().split('-').join('');
+// request promise
+const rp=require('request-promise');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -46,17 +48,44 @@ app.get('/mine', function(req, res) {
 // only register not broadcast by other nodes
 app.post('/register-and-broadcast-node',function(req,res){
 	const newNodeUrl = req.body.newNodeUrl;
+	if (bitcoin.networkNodes.indexOf(newNodeUrl)==-1) bitcoin.networkNodes.push(newNodeUrl);
+	const regNodesPromises =[];   //array to save all request
+	bitcoin.networkNodes.forEach(networkNodeUrl => {
 
-	//.............
-	//..............
+	const requestOptions={
+		uri:networkNodeUrl+'/register-node',
+		method: 'POST',
+		body:{newNodeUrl:newNodeUrl},
+		json: true
+	};
+	regNodesPromises.push(rp(requestOptions));
+	});	
+
+   Promise.all(reqNodesPromises)                //sent all promises saved in the array
+   .then(data =>{
+   	const bulkRegisterOptions ={							//register all nodes in new url
+   		uri: newNodeUrl +'register-nodes-bulk',
+   		method:'POST',
+   		body:{ allNetworkNodes :[...bitcoin.networkNodes,bitcoin.currentNodeUrl]},
+   		json: true
+   	}
+
+   	return rp(bulkRegisterOptions);
+   })
+
+   .then(data =>{
+   	res.json({note:'New node registered with node succesfully'});
+   })
 
 })
 
 //to register a node for every node not broadcast in the network
 app.post('/register-node',function(req,res){
 	const newNodeUrl = req.body.newNodeUrl;
-
-
+	const nodeNotAlreadyPresent = bitcoin.networkNodes.indexOf(newNodeUrl) == -1;   //present in this node or not
+	const notCurrentNode = bitcoin.currentNodeUrl !== newNodeUrl;										//this node or not
+	if(nodeNotAlreadyPresent && notCurrentNode)bitcoin.networkNodes.push(newNodeUrl);
+	res.json({ note:'new node registered succesfully with this node in the network'})
 })
 
 // new node to register all nodes already in the network
