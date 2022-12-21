@@ -42,12 +42,29 @@ app.get('/mine', function(req, res) {
   });
 });
 
-// to register a node and select node
+// to register new node and broadcast node to other nodes and register
+// only register not broadcast by other nodes
 app.post('/register-and-broadcast-node',function(req,res){
+	const newNodeUrl = req.body.newNodeUrl;
 
+	//.............
+	//..............
+
+})
+
+//to register a node for every node not broadcast in the network
+app.post('/register-node',function(req,res){
+	const newNodeUrl = req.body.newNodeUrl;
 
 
 })
+
+// new node to register all nodes already in the network
+app.post('/register-nodes-bulk',function(req,res){
+	
+})
+
+
 
 
 
