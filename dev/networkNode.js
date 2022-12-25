@@ -4,7 +4,7 @@ const bitcoin = new Blockchain();
 const app = express();
 const port = process.argv[2]; //different port number
 
-
+// const bitcoin;
 const uuid = require('uuid');
 const nodeAddress = uuid.v4().split('-').join('');
 // request promise
@@ -46,7 +46,7 @@ app.get('/mine', function(req, res) {
 
 // to register new node and broadcast node to other nodes and register
 // only register not broadcast by other nodes
-app.post('/register-broadcast', function (req, res) {
+app.post('/register-and-broadcast-node', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
     if (bitcoin.networkNodes.indexOf(newNodeUrl) == -1) bitcoin.networkNodes.push(newNodeUrl);
 
