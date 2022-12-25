@@ -1,15 +1,17 @@
 const sha256 = require('sha256');
 const currentNodeUrl = process.argv[3];
 
+//main blockchain feature:
 function Blockchain() {
-	this.chain=[];
-	this.pendingTranscations=[];
-	this.currentNodeUrl = currentNodeUrl; //current node
-	this.networkNodes = [];  //other nodes for blockchain to be aware
+	this.chain=[];																//chain		
+	this.pendingTranscations=[];												//storingPending transcation
+	this.currentNodeUrl = currentNodeUrl;                                       //current node
+	this.networkNodes = [];                                                     //other nodes for blockchain to be aware
 
-	this.createNewBlock(100,'0','0'); //genesis block
+	this.createNewBlock(100,'0','0');                                            //genesis block
 }
 
+//newBlock
 Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash){
 	const newBlock ={
 		index: this.chain.length +1,
@@ -20,8 +22,8 @@ Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash){
 		previousBlockHash: previousBlockHash
 	};
 
-	this.pendingTranscations =[];
-	this.chain.push(newBlock);
+	this.pendingTranscations =[];//empty transcation
+	this.chain.push(newBlock);// push into chain
 
 	return newBlock;
 }
