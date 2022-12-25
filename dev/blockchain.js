@@ -1,5 +1,5 @@
 const sha256 = require('sha256');
-const currentNodeUrl = process.argv[3];
+const currentNodeUrl = process.argv[3];    //acessing the 3rd value in the apckagejs 
 
 //main blockchain feature:
 function Blockchain() {
@@ -7,7 +7,6 @@ function Blockchain() {
 	this.pendingTranscations=[];												//storingPending transcation
 	this.currentNodeUrl = currentNodeUrl;                                       //current node
 	this.networkNodes = [];                                                     //other nodes for blockchain to be aware
-
 	this.createNewBlock(100,'0','0');                                            //genesis block
 }
 
