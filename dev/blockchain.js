@@ -31,15 +31,32 @@ Blockchain.prototype.getLastBlock = function() {
   return this.chain[this.chain.length - 1];
 }
 
+// Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
+//   const newTransaction = {
+//     amount: amount,
+//     sender: sender,
+//     recipient: recipient
+//   };
+//   this.pendingTranscations.push(newTransaction);
+//   return this.getLastBlock()['index'] + 1;
+// }
+//refractoring transcation
+
 Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
-  const newTransaction = {
-    amount: amount,
-    sender: sender,
-    recipient: recipient
+	const newTranscation = {
+	  amount: amount,
+	  sender: sender,
+	  recipient: recipient
+	};
+	
+	return newTranscation;
+  }
+  
+  Blockchain.prototype.addTranscationToPendingTranscation = function(transcationObj) {
+	  this.pendingTranscations.push(transcationObj);
+	  return this.getLastBlock()['index'] + 1;
   };
-  this.pendingTranscations.push(newTransaction);
-  return this.getLastBlock()['index'] + 1;
-}
+  
 
 
 

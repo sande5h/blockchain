@@ -25,6 +25,34 @@ app.post('/transcation',function(req, res){
 	res.json({ note: `transcation will be added in block ${blockIndex}.`});
 });
 
+app.post('/transcation/broadcast',function(req, res){
+
+	const newTransaction = bitcoin.createNewTransaction(req.body.amount , req.body.sender, req.body.receipt);
+	bitcoin.addTranscationToPendingTranscation(newTransaction);
+	const requestPromises=[];
+
+	bitcoin.networkNodes.forEach(networkNodeUrl => {
+		const requestOptions ={
+			uri: networkNodeUrl + '/transcation',
+			method: 'POST',
+			body: newTransaction,
+			json: true
+		};
+
+		requestpromises.push(rp(requestOptions));
+	});
+
+	Promise.all(requestPromises)
+	.then(data =>{
+		res.json({ note: 'transcation done succesfully' });
+
+
+	});
+});
+
+
+
+
 app.get('/mine', function(req, res) {
 
   const lastBlock = bitcoin.getLastBlock();
@@ -75,7 +103,7 @@ app.post('/register-and-broadcast-node', function (req, res) {
         });
 });
 
-// register a node with a netwrok
+// register a node with a network
 app.post('/register-node', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
     const nodeNotAlreadyPresent = bitcoin.networkNodes.indexOf(newNodeUrl) == -1;
