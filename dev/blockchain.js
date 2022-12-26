@@ -1,10 +1,11 @@
 const sha256 = require('sha256');
 const currentNodeUrl = process.argv[3];    //acessing the 3rd value in the apckagejs 
+const uuid = require('uuid');
 
 //main blockchain feature:
 function Blockchain() {
 	this.chain=[];																//chain		
-	this.pendingTranscations=[];												//storingPending transcation
+	this.pendingtransactions=[];												//storingPending transaction
 	this.currentNodeUrl = currentNodeUrl;                                       //current node
 	this.networkNodes = [];                                                     //other nodes for blockchain to be aware
 	this.createNewBlock(100,'0','0');                                            //genesis block
@@ -15,13 +16,13 @@ Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash){
 	const newBlock ={
 		index: this.chain.length +1,
 		timeStamp: Date.now(),
-		transcations: this.pendingTranscations,
+		transactions: this.pendingtransactions,
 		nonce: nonce,
 		hash: hash,
 		previousBlockHash: previousBlockHash
 	};
 
-	this.pendingTranscations =[];//empty transcation
+	this.pendingtransactions =[];//empty transaction
 	this.chain.push(newBlock);// push into chain
 
 	return newBlock;
@@ -37,23 +38,25 @@ Blockchain.prototype.getLastBlock = function() {
 //     sender: sender,
 //     recipient: recipient
 //   };
-//   this.pendingTranscations.push(newTransaction);
+//   this.pendingtransactions.push(newTransaction);
 //   return this.getLastBlock()['index'] + 1;
 // }
-//refractoring transcation
+//refractoring transaction
 
 Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
-	const newTranscation = {
+	const newtransaction = {
 	  amount: amount,
 	  sender: sender,
-	  recipient: recipient
+	  recipient: recipient,
+	  transactionId: uuid.v4().split('-').join('')
+
 	};
 	
-	return newTranscation;
-  }
+	return newtransaction;
+  };
   
-  Blockchain.prototype.addTranscationToPendingTranscation = function(transcationObj) {
-	  this.pendingTranscations.push(transcationObj);
+  Blockchain.prototype.addTransactionToPendingTransaction = function(transactionObj) {
+	  this.pendingtransactions.push(transactionObj);
 	  return this.getLastBlock()['index'] + 1;
   };
   
