@@ -47,6 +47,7 @@ app.post('/transaction/broadcast', function (req, res) {
     Promise.all(requestPromises)
         .then(data => {
             res.json({ note: "Transaction created and broadcasted successfully!" });
+            console.log(process.memoryUsage());
         });
 });
 
@@ -150,6 +151,10 @@ app.post('/register-and-broadcast-node', function (req, res) {
         })
         .then(data => {
             res.json({ note: 'new node registered in network successfully !' });
+            console.log(process.memoryUsage());
+            
+            
+
         });
 });
 
@@ -218,5 +223,6 @@ app.get('/consensus',function(req,res){
 
 app.listen(port, function(){
   console.log(`Example app listening on port ${port}`)
+  console.log(process.memoryUsage());
 }
 );
